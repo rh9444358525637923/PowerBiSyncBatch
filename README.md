@@ -1,4 +1,4 @@
-# README: MSAL.NET を利用したデーモンアプリ（夜間バッチ）の Entra ID 認証基盤
+# Power BI 連携バッチ処理 (PowerBiSyncBatch) - サービスプリンシパルによる API 自動実行
 
 ## 概要
 本アプリはVB.NET Framework MSAL.NETを用いてサービスプリンシパル、クライアントシークレットを利用して認証、 Power BI REST APIを実行するデーモンアプリを実装
