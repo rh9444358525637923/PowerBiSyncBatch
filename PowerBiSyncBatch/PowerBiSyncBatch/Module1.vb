@@ -1,10 +1,19 @@
 ﻿
+Imports System.Threading
+
 Module Module1
 
     Sub Main()
 
         Try
-            MainAsync().GetAwaiter().GetResult()
+
+            Console.WriteLine($"[Main] スタート - スレッドID: {Thread.CurrentThread.ManagedThreadId}")
+
+            Call MainAsync()
+
+            Console.WriteLine($"[Main] エンド - スレッドID: {Thread.CurrentThread.ManagedThreadId}")
+
+
         Catch ex As Exception
             Console.WriteLine($"バッチ処理が異常終了しました: {ex.Message}")
         End Try
@@ -12,7 +21,9 @@ Module Module1
         Console.WriteLine("処理が完了しました")
     End Sub
 
-    Private Async Function MainAsync() As Task
+    Private Function MainAsync() As Task
+
+        Console.WriteLine($"[MainAsync] スタート - スレッドID: {Thread.CurrentThread.ManagedThreadId}")
 
         Dim clientId As String = System.Configuration.ConfigurationManager.AppSettings("ClientId")
         Dim clientSecret As String = System.Configuration.ConfigurationManager.AppSettings("ClientSecret")
@@ -21,7 +32,10 @@ Module Module1
         Dim client As New PowerBiBatchClient()
         client.Initialize(clientId, clientSecret, tenantId)
 
-        Await client.GetPowerBiDataAsync()
+        client.GetPowerBiDataAsync().Wait()
+
+        Console.WriteLine($"[MainAsync] エンド - スレッドID: {Thread.CurrentThread.ManagedThreadId}")
+
     End Function
 
 End Module
